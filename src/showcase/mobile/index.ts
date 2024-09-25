@@ -4,10 +4,8 @@ import {
 	CropperState,
 	ImageTransform,
 	InitializedCropperState,
-	MoveDirections,
 	PostprocessAction,
 	RawAspectRatio,
-	ResizeAnchor,
 	Size,
 } from '../../types';
 import {
@@ -27,7 +25,7 @@ import {
 	mergePositionRestrictions,
 	ratio,
 } from '../../service';
-import { copyState, ResizeOptions, transformImage as originalTransformImage, ResizeAlgorithm } from '../../state';
+import { copyState, transformImage as originalTransformImage, ResizeAlgorithm } from '../../state';
 import {
 	approximateSizeInsideImage,
 	BoundingBoxType,
