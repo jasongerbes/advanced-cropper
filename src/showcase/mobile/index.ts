@@ -4,10 +4,10 @@ import {
 	CropperState,
 	ImageTransform,
 	InitializedCropperState,
+	MoveDirections,
 	PostprocessAction,
 	RawAspectRatio,
 	ResizeAnchor,
-	ResizeDirections,
 	Size,
 } from '../../types';
 import {
@@ -27,7 +27,7 @@ import {
 	mergePositionRestrictions,
 	ratio,
 } from '../../service';
-import { copyState, ResizeOptions, transformImage as originalTransformImage } from '../../state';
+import { copyState, ResizeOptions, transformImage as originalTransformImage, ResizeAlgorithm } from '../../state';
 import {
 	approximateSizeInsideImage,
 	BoundingBoxType,
@@ -90,13 +90,13 @@ export function transformImage(state: ExtendedState, settings: CoreSettings, tra
 	return originalTransformImage(state, settings, { rotate, move, scale });
 }
 
-export function resizeCoordinates(
-	state: CropperState,
-	settings: CoreSettings & FitToImageSettings,
-	anchor: ResizeAnchor,
-	directions: ResizeDirections,
-	options: ResizeOptions,
-) {
+export const resizeCoordinates: ResizeAlgorithm<CoreSettings & FitToImageSettings> = (
+	state,
+	settings,
+	anchor,
+	directions,
+	options,
+) => {
 	if (isInitializedState(state)) {
 		const result = copyState(state);
 
@@ -158,7 +158,7 @@ export function resizeCoordinates(
 		return result;
 	}
 	return state;
-}
+};
 
 export function defaultSize(state: CropperState, settings: CoreSettings) {
 	const imageSize = getTransformedImageSize(state);
